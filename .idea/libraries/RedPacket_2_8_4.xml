@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="RedPacket-2.8.4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/cn.rongcloud.android/RedPacket/2.8.4/jars/libs/gson-2.2.4.jar!/" />
+      <root url="file://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/cn.rongcloud.android/RedPacket/2.8.4/res" />
+      <root url="jar://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/cn.rongcloud.android/RedPacket/2.8.4/jars/libs/jrmfry-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/cn.rongcloud.android/RedPacket/2.8.4/jars/libs/alipaySdk-20160516.jar!/" />
+      <root url="jar://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/cn.rongcloud.android/RedPacket/2.8.4/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cn.rongcloud.android/RedPacket/2.8.4/3c4a11fd3eb6361585615f41fad7e73e02838c94/RedPacket-2.8.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
