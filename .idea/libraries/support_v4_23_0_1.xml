@@ -2,9 +2,9 @@
   <library name="support-v4-23.0.1">
     <ANNOTATIONS>
       <root url="jar://$PROJECT_DIR$/CallKit/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/IMKit/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/annotations.zip!/" />
       <root url="jar://$PROJECT_DIR$/Recognizer/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/annotations.zip!/" />
       <root url="jar://$PROJECT_DIR$/seal/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/annotations.zip!/" />
-      <root url="jar://$PROJECT_DIR$/IMKit/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/CallKit/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/res" />
