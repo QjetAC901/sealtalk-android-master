@@ -17,7 +17,6 @@
         android:hint="@string/Search"
         android:maxLines="1"
         android:textSize="16sp"
-
         android:imeOptions="actionSearch" />
 
     <View

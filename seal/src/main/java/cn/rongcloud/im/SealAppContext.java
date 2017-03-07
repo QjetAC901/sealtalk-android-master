@@ -122,17 +122,16 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
      */
     private void initListener() {
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
-        RongIM.setConversationListBehaviorListener(this);
-        RongIM.setConnectionStatusListener(this);
-        RongIM.setUserInfoProvider(this, true);
+        RongIM.setConversationListBehaviorListener(this);//会话列表界面操作的监听器
+        RongIM.setConnectionStatusListener(this);//用户状态  例如 异地登录
+        RongIM.setUserInfoProvider(this, true);//获取用户信息
         RongIM.setGroupInfoProvider(this, true);
         RongIM.setLocationProvider(this);//设置地理位置提供者,不用位置的同学可以注掉此行代码
         setInputProvider();
         //setUserInfoEngineListener();//移到SealUserInfoManager
         setReadReceiptConversationType();
-        RongIM.getInstance().enableNewComingMessageIcon(true);
-        RongIM.getInstance().enableUnreadMessageIcon(true);
-        //RongIM.setGroupUserInfoProvider(this, true);//seal app暂时未使用这种方式,目前使用UserInfoProvider
+        RongIM.getInstance().enableNewComingMessageIcon(true);//设置会话界面未读新消息是否展示 注:未读新消息大于1条即展示
+        RongIM.getInstance().enableUnreadMessageIcon(true);//设置会话界面历史消息是否展示 注:历史消息大于10条即展示
         BroadcastManager.getInstance(mContext).addAction(SealConst.EXIT, new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -151,7 +150,7 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
     }
 
     private void setInputProvider() {
-        RongIM.setOnReceiveMessageListener(this);
+        RongIM.setOnReceiveMessageListener(this);//设置接收消息的监听器。
 
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
         IExtensionModule defaultModule = null;
@@ -244,9 +243,6 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
                 BroadcastManager.getInstance(mContext).sendBroadcast(UPDATE_FRIEND);
                 BroadcastManager.getInstance(mContext).sendBroadcast(UPDATE_RED_DOT);
             }
-            /*// 发广播通知更新好友列表
-            BroadcastManager.getInstance(mContext).sendBroadcast(UPDATE_RED_DOT);
-            }*/
         } else if (messageContent instanceof GroupNotificationMessage) {
             GroupNotificationMessage groupNotificationMessage = (GroupNotificationMessage) messageContent;
             NLog.e("onReceived:" + groupNotificationMessage.getMessage());
@@ -387,7 +383,9 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
 
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
-        if (conversationType == Conversation.ConversationType.CUSTOMER_SERVICE || conversationType == Conversation.ConversationType.PUBLIC_SERVICE || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
+        if (conversationType == Conversation.ConversationType.CUSTOMER_SERVICE
+                || conversationType == Conversation.ConversationType.PUBLIC_SERVICE
+                || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
             return false;
         }
         //开发测试时,发送系统消息的userInfo只有id不为空

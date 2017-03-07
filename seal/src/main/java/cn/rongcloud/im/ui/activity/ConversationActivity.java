@@ -100,14 +100,10 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.conversation);
         sp = getSharedPreferences("config", MODE_PRIVATE);
         mDialog = new LoadingDialog(this);
-
         mRightButton = getHeadRightButton();
-
         Intent intent = getIntent();
-
         if (intent == null || intent.getData() == null)
             return;
-
         mTargetId = intent.getData().getQueryParameter("targetId");
         //10000 为 Demo Server 加好友的 id，若 targetId 为 10000，则为加好友消息，默认跳转到 NewFriendListActivity
         // Demo 逻辑
@@ -117,12 +113,8 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
         }
         mConversationType = Conversation.ConversationType.valueOf(intent.getData()
                             .getLastPathSegment().toUpperCase(Locale.getDefault()));
-
         title = intent.getData().getQueryParameter("title");
-
         setActionBarTitle(mConversationType, mTargetId);
-
-
         if (mConversationType.equals(Conversation.ConversationType.GROUP)) {
             mRightButton.setBackground(getResources().getDrawable(R.drawable.icon2_menu));
         } else if (mConversationType.equals(Conversation.ConversationType.PRIVATE) | mConversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE) | mConversationType.equals(Conversation.ConversationType.DISCUSSION)) {
@@ -214,6 +206,7 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
 
         SealAppContext.getInstance().pushActivity(this);
 
+        //设置群组成员提供者
         RongIM.getInstance().setGroupMembersProvider(new RongIM.IGroupMembersProvider() {
             @Override
             public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback callback) {
@@ -231,7 +224,6 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
                 return null;
             }
         });
-        //CallKit end 2
     }
 
     /**
@@ -359,15 +351,11 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
      * @param mTargetId         会话 Id
      */
     private void enterFragment(Conversation.ConversationType mConversationType, String mTargetId) {
-
         fragment = new ConversationFragmentEx();
-
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
                   .appendPath("conversation").appendPath(mConversationType.getName().toLowerCase())
                   .appendQueryParameter("targetId", mTargetId).build();
-
         fragment.setUri(uri);
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         //xxx 为你要加载的 id
         transaction.add(R.id.rong_content, fragment);
@@ -519,9 +507,7 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
      */
     private void enterSettingActivity() {
 
-        if (mConversationType == Conversation.ConversationType.PUBLIC_SERVICE
-                || mConversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
-
+        if (mConversationType == Conversation.ConversationType.PUBLIC_SERVICE || mConversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
             RongIM.getInstance().startPublicServiceProfile(this, mConversationType, mTargetId);
         } else {
             UriFragment fragment = (UriFragment) getSupportFragmentManager().getFragments().get(0);
@@ -531,19 +517,23 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
             if (TextUtils.isEmpty(mTargetId)) {
                 NToast.shortToast(mContext, "讨论组尚未创建成功");
             }
-
-
             Intent intent = null;
             if (mConversationType == Conversation.ConversationType.GROUP) {
+
                 intent = new Intent(this, GroupDetailActivity.class);
                 intent.putExtra("conversationType", Conversation.ConversationType.GROUP);
+
             } else if (mConversationType == Conversation.ConversationType.PRIVATE) {
+
                 intent = new Intent(this, PrivateChatDetailActivity.class);
                 intent.putExtra("conversationType", Conversation.ConversationType.PRIVATE);
+
             } else if (mConversationType == Conversation.ConversationType.DISCUSSION) {
+
                 intent = new Intent(this, DiscussionDetailActivity.class);
                 intent.putExtra("TargetId", mTargetId);
                 startActivityForResult(intent, 166);
+
                 return;
             }
             intent.putExtra("TargetId", mTargetId);
@@ -568,10 +558,7 @@ public class ConversationActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void onDestroy() {
-        //CallKit start 3
         RongCallKit.setGroupMemberProvider(null);
-        //CallKit end 3
-
         RongIM.getInstance().setGroupMembersProvider(null);
         RongIM.getInstance().setRequestPermissionListener(null);
         RongIMClient.setTypingStatusListener(null);

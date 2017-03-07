@@ -123,6 +123,7 @@ public class DragPointView extends TextView {
                 pointView.refrashXY(event.getRawX() - p[0], event.getRawY() - p[1]);
                 break;
             case MotionEvent.ACTION_CANCEL:
+
             case MotionEvent.ACTION_UP:
                 if (scrollParent != null) {
                     scrollParent.requestDisallowInterceptTouchEvent(false);

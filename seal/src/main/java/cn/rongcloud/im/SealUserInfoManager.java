@@ -281,10 +281,11 @@ public class SealUserInfoManager implements OnDataListener {
      * 第一次登录时同步好友,群组,群组成员,黑名单数据
      */
     public void getAllUserInfo() {
-        if (!isNetworkConnected())
+        if (!isNetworkConnected())  //首先判断网络
             return;
-        if (hasGetAllUserInfo())
+        if (hasGetAllUserInfo())//其次判断是否已经全部更新过
             return;
+        //在工作子线程获取数据
         mWorkHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -327,7 +328,6 @@ public class SealUserInfoManager implements OnDataListener {
                             }
                         }
                         //部分群组信息同步的情况,此时需要特殊处理,但是目前暂未处理
-                        //// TODO: 16/9/20
                         if (!hasGetAllGroupMembers()) {
                             if (hasGetPartGroupMembers()) {
                                 syncDeleteGroupMembers();
@@ -359,6 +359,11 @@ public class SealUserInfoManager implements OnDataListener {
         sp.edit().putInt("getAllUserInfoState", mGetAllUserInfoState).apply();
     }
 
+    /**
+     * 首次同步好友信息
+     * @return
+     * @throws HttpException
+     */
     private boolean fetchFriends() throws HttpException {
         UserRelationshipResponse userRelationshipResponse;
         try {
