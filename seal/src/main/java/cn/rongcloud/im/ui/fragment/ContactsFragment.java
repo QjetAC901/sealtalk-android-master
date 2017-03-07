@@ -200,6 +200,7 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
     /**
      * 根据输入框中的值来过滤数据并更新ListView
      *
